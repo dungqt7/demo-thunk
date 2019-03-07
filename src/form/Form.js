@@ -147,12 +147,6 @@ const DemoForm  = ({handleSubmit,reset, pristine, submitting, valid}) => {
           component={renderTextField}
           label="Club Name"
         />
-        <Field
-          name="Picker"
-          type="text"
-          component={renderPicker}
-          label="Date Picker"
-        />
       <FieldArray name="members" component={renderMembers} />
       <div>
         <button type="submit" disabled={submitting}>
