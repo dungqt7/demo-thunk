@@ -3,6 +3,8 @@ import { reduxForm, Field, FieldArray } from 'redux-form';
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
+import {  MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
+import DateFnsUtils from '@date-io/date-fns';
 const styleul = {
   listStyle: 'none'
 }
@@ -57,6 +59,25 @@ const renderTextField = ({
     {...custom}
   />
 )
+const renderPicker = ({
+  label,
+  input,
+  meta: { touched, invalid, error },
+  ...custom
+}) => (
+  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+  <DatePicker
+    label={label}
+    placeholder={label}
+    error={touched && invalid}
+    helperText={touched && error}
+    {...input}
+    {...custom}
+    value = {input.value !== ''? new Date(input.value) : null}
+  />
+   </MuiPickersUtilsProvider>
+)
+
   const renderHobbies = ({ fields, meta: { error } }) => (
     <ul style = {styleul}>
       <li>
@@ -125,6 +146,12 @@ const DemoForm  = ({handleSubmit,reset, pristine, submitting, valid}) => {
           type="text"
           component={renderTextField}
           label="Club Name"
+        />
+        <Field
+          name="Picker"
+          type="text"
+          component={renderPicker}
+          label="Date Picker"
         />
       <FieldArray name="members" component={renderMembers} />
       <div>
