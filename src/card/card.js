@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import DemoForm from '../form/Form';
-
+import './card.css';
 const styles = {
   card: {
     minWidth: 200,
@@ -22,7 +22,7 @@ const styles = {
   },
   pos: {
     marginBottom: 12,
-  },
+  }, 
 };
 
 function SimpleCard(props) {
@@ -30,23 +30,18 @@ function SimpleCard(props) {
 
   return (
     <Card className={classes.card}>
-      <CardContent>
-      <Typography variant="h5"  style = {{textAlign: 'left'}}>
-          Demo
-        </Typography>
-        <Typography  style = {{textAlign: 'left',  borderBottomColor: 'black'}} color="textSecondary" gutterBottom>
-           Setting in the section apply to all added 
-        </Typography>
-        <Typography  variant="h5"  style = {{textAlign: 'left', fontSize: 14, fontWeight: 'bold'}}>
-           Ship-to
-        </Typography>
-        <Typography style = {{textAlign: 'left'}}>
-            <DemoForm/>
-        </Typography>
+      <CardContent style = {{position: 'relative'}}>
+            <Typography variant="h5"  style = {{textAlign: 'left'}}>
+                Location
+            </Typography>
+            <Typography className = "setting"  style = {{textAlign: 'left', position: 'absolute'}} color="textSecondary" gutterBottom>
+                Setting in the section apply to all added 
+            </Typography>
+            <Typography  variant="h5"  style = {{textAlign: 'left', fontSize: 14, fontWeight: 'bold', marginTop: 33}}>
+                Ship-to
+            </Typography>
+            <DemoForm />
       </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
     </Card>
   );
 }
