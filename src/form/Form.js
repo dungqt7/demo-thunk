@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { reduxForm, Field, FieldArray } from 'redux-form';
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
 import {  MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import Select from '@material-ui/core/Select';
@@ -34,7 +35,7 @@ const renderSelectField = ({
 }) => (
   <FormControl error={touched && error}>
      <InputLabel>{label}</InputLabel>
-    <Select
+    <Select 
       {...input}
       {...custom}
       style = {{width:480}}
@@ -99,9 +100,14 @@ const renderTextField = ({
         {/* <button type="button" onClick={() => fields.push({})}>
           Add Member
         </button> */}
-        <Button  color="primary" onClick={() => fields.push({})} style = {{marginTop: 51}}>
-          Add Member
-       </Button> 
+       <div style = {{display: "flex"}}>
+        <AddIcon style = {{marginTop:93}} className = "addButton"/>
+          <Button  color="primary" className = "addArray" onClick={() => fields.push({})} style = {{marginTop: 82, borderRadius:0, width:232, marginBottom: 9}}>
+            Add Member
+            <svg className="MuiSvgIcon-root-158 MuiSelect-icon-157" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation"><path d="M7 10l5 5 5-5z"></path></svg>
+        </Button> 
+       </div>
+        
         {submitFailed && error && <span>{error}</span>}
       </li>
       {fields.map((member, index) => (
@@ -127,158 +133,322 @@ const renderTextField = ({
       ))}
     </ul>
   )
-  
-const DemoForm  = ({handleSubmit,reset, pristine, submitting, valid}) => {
-  return (
-    <form onSubmit = {handleSubmit(val => console.log(val))}  style={{float: "left"}} >
-       <div style = {{display:'flex'}}>
-          <Field
-              name="clubName"
-              type="text"
-              component={renderTextField}
-              label="Geo Ceo"
-              validate={[required,number,mount]}
-            />
-            <Button style = {{backgroundColor: '#E1E4E9', marginLeft:12}}   >
-              Check
-            </Button>
-            <Button style = {{backgroundColor: '#E1E4E9', marginLeft:12}} onClick={reset} >
-              Reset
-            </Button>
-       </div>
-        <div style = {{display: "flex"}}>
-          <div>
-            <Field
-              name="country"
-              component={renderSelectField}
-              label="Country"
-            >
-              <option value="" />
-              <option value={'USA'}>USA</option>
-              <option value={'UK'}>UK</option>
-              <option value={'VN'}>VN</option>
-            </Field>
-          </div>
-          <div style = {{marginLeft: 20}}>
-            <Field
-              name="state"
-              component={renderSelectField}
-              label="State"
-              style = {{marginLeft: 12}}
-            >
-              <option value="" />
-              <option value={'Alabama'}> Alabama</option>
-              <option value={'Alaska'}>Alaska</option>
-              <option value={'Connecticut'}> Connecticut</option>
-              <option value={'Louisiana'}>  Louisiana</option>
-            </Field>
-          </div>
-         
+  class DemoForm extends Component  {
+    handleChange = (e) => {
+      this.setState({ value: e.target.value });
+    }
+     render() {
+       return(
+        <form onSubmit = {this.props.handleSubmit(val => console.log(val))}  style={{float: "left"}} >
+        <div style = {{display:'flex'}}>
+           <Field
+               name="clubName"
+               type="text"
+               component={renderTextField}
+               label="Geo Ceo"
+               validate={[required,number,mount]}
+             />
+             <Button style = {{backgroundColor: '#E1E4E9', marginLeft:12}}   >
+               Check
+             </Button>
+             <Button style = {{backgroundColor: '#E1E4E9', marginLeft:12}} onClick={this.props.reset} >
+               Reset
+             </Button>
         </div>
-        <div style = {{display: "flex"}}>
-          <div>
-            <Field
-              name="county"
-              component={renderSelectField}
-              label="County"
-            >
-              <option value="" />
-              <option value={'USA'}>USA</option>
-              <option value={'UK'}>UK</option>
-              <option value={'VN'}>VN</option>
-            </Field>
-          </div>
-          <div style = {{marginLeft: 20}}>
-            <Field
-              name="city"
-              component={renderSelectField}
-              label="City"
-              style = {{marginLeft: 12}}
-            >
-              <option value="" />
-              <option value={'USA'}>USA</option>
-              <option value={'UK'}>UK</option>
-              <option value={'VN'}>VN</option>
-            </Field>
-          </div>
-        </div>
-        <div style = {{display: "flex"}}>
-          <div>
-            <Field
-              name="district"
-              component={renderSelectField}
-              label="District"
-            >
-              <option value="" />
-              <option value={'USA'}>USA</option>
-              <option value={'UK'}>UK</option>
-              <option value={'VN'}>VN</option>
-            </Field>
-          </div>
-          <div style = {{marginLeft: 20}}>
-            <Field
-              name="street"
-              type="text"
-              component={renderTextField}
-              label="Street #"
-              style = {{width:100}}
-            />
-          </div>
-          <div style = {{marginLeft: 14}}>
-            <Field
-              name="streetName"
-              type="text"
-              component={renderTextField}
-              label="Street Name"
-              style = {{width:368}}
-            />
-          </div>
+         <div style = {{display: "flex"}}>
+           <div>
+             <Field
+               name="country"
+               component={renderSelectField}
+               label="Country"
+               onChange={this.handleChange}
+             >
+               <option value="" />
+               <option value={'USA'}>USA</option>
+               <option value={'UK'}>UK</option>
+               <option value={'VN'}>VN</option>
+             </Field>
+           </div>
+           <div style = {{marginLeft: 20}}>
+             <Field
+               name="state"
+               component={renderSelectField}
+               label="State"
+               style = {{marginLeft: 12}}
+             >
+               <option value="" />
+               <option value={'Alabama'}> Alabama</option>
+               <option value={'Alaska'}>Alaska</option>
+               <option value={'Connecticut'}> Connecticut</option>
+               <option value={'Louisiana'}>  Louisiana</option>
+             </Field>
+           </div>
           
-        </div>
-        <div style = {{display: "flex", justifyContent: " space-between"}}>
-          <div style = {{}}>
-              <Field
-                name="zipCode"
-                type="text"
-                component={renderTextField}
-                label="ZIP Code"
-                style = {{width:150}}
-              />
-              <Field
-                name="ext"
-                type="text"
-                component={renderTextField}
-                label="+4 Ext"
-                style = {{width:100, marginLeft: 6}}
-              />
-          </div>
-          <div style = {{marginTop: 16, marginRight: 0}}>
-              <Button style = {{backgroundColor: '#E1E4E9'}}>
-                Check
-              </Button>
-              <Button style = {{backgroundColor: '#E1E4E9', marginLeft: 6, width: 150}} >
-                FIND GEO CODES
-              </Button>
-          </div>
+         </div>
+         <div style = {{display: "flex"}}>
+           <div>
+             <Field
+               name="county"
+               component={renderSelectField}
+               label="County"
+             >
+               <option value="" />
+               <option value={'USA'}>USA</option>
+               <option value={'UK'}>UK</option>
+               <option value={'VN'}>VN</option>
+             </Field>
+           </div>
+           <div style = {{marginLeft: 20}}>
+             <Field
+               name="city"
+               component={renderSelectField}
+               label="City"
+               style = {{marginLeft: 12}}
+             >
+               <option value="" />
+               <option value={'USA'}>USA</option>
+               <option value={'UK'}>UK</option>
+               <option value={'VN'}>VN</option>
+             </Field>
+           </div>
+         </div>
+         <div style = {{display: "flex"}}>
+           <div>
+             <Field
+               name="district"
+               component={renderSelectField}
+               label="District"
+             >
+               <option value="" />
+               <option value={'USA'}>USA</option>
+               <option value={'UK'}>UK</option>
+               <option value={'VN'}>VN</option>
+             </Field>
+           </div>
+           <div style = {{marginLeft: 20}}>
+             <Field
+               name="street"
+               type="text"
+               component={renderTextField}
+               label="Street #"
+               style = {{width:100}}
+             />
+           </div>
+           <div style = {{marginLeft: 14}}>
+             <Field
+               name="streetName"
+               type="text"
+               component={renderTextField}
+               label="Street Name"
+               style = {{width:368}}
+             />
+           </div>
            
-        </div>
-        <div  className = "borderFooter"></div>
-        <div>
-            <FieldArray name="members" component={renderMembers} />
-        </div>
+         </div>
+         <div style = {{display: "flex", justifyContent: " space-between"}}>
+           <div style = {{}}>
+               <Field
+                 name="zipCode"
+                 type="text"
+                 component={renderTextField}
+                 label="ZIP Code"
+                 style = {{width:150}}
+               />
+               <Field
+                 name="ext"
+                 type="text"
+                 component={renderTextField}
+                 label="+4 Ext"
+                 style = {{width:100, marginLeft: 6}}
+               />
+           </div>
+           <div style = {{marginTop: 16, marginRight: 0}}>
+               <Button style = {{backgroundColor: '#E1E4E9'}}>
+                 Check
+               </Button>
+               <Button style = {{backgroundColor: '#E1E4E9', marginLeft: 6, width: 150}} >
+                 FIND GEO CODES
+               </Button>
+           </div>
+            
+         </div>
+         <div  className = "borderFooter"></div>
+        
+            
+         
+       
+       <div>
+       <div style = {{display:"flex", justifyContent: "flex-end"}}>
+         <FieldArray name="members" component={renderMembers} />
+       </div>
+       
+         <button type="submit" disabled={this.props.submitting}>
+           Submit
+         </button>
+         <button type="button" disabled={this.props.pristine || this.props.submitting} onClick={this.props.reset}>
+           Clear Values
+         </button>
+       
+       </div>
+     </form>
+       );
+     }
+  }
+// const DemoForm  = ({handleSubmit,reset, pristine, submitting, valid}) => {
+//   return (
+//     <form onSubmit = {handleSubmit(val => console.log(val))}  style={{float: "left"}} >
+//        <div style = {{display:'flex'}}>
+//           <Field
+//               name="clubName"
+//               type="text"
+//               component={renderTextField}
+//               label="Geo Ceo"
+//               validate={[required,number,mount]}
+//             />
+//             <Button style = {{backgroundColor: '#E1E4E9', marginLeft:12}}   >
+//               Check
+//             </Button>
+//             <Button style = {{backgroundColor: '#E1E4E9', marginLeft:12}} onClick={reset} >
+//               Reset
+//             </Button>
+//        </div>
+//         <div style = {{display: "flex"}}>
+//           <div>
+//             <Field
+//               name="country"
+//               component={renderSelectField}
+//               label="Country"
+//             >
+//               <option value="" />
+//               <option value={'USA'}>USA</option>
+//               <option value={'UK'}>UK</option>
+//               <option value={'VN'}>VN</option>
+//             </Field>
+//           </div>
+//           <div style = {{marginLeft: 20}}>
+//             <Field
+//               name="state"
+//               component={renderSelectField}
+//               label="State"
+//               style = {{marginLeft: 12}}
+//             >
+//               <option value="" />
+//               <option value={'Alabama'}> Alabama</option>
+//               <option value={'Alaska'}>Alaska</option>
+//               <option value={'Connecticut'}> Connecticut</option>
+//               <option value={'Louisiana'}>  Louisiana</option>
+//             </Field>
+//           </div>
+         
+//         </div>
+//         <div style = {{display: "flex"}}>
+//           <div>
+//             <Field
+//               name="county"
+//               component={renderSelectField}
+//               label="County"
+//             >
+//               <option value="" />
+//               <option value={'USA'}>USA</option>
+//               <option value={'UK'}>UK</option>
+//               <option value={'VN'}>VN</option>
+//             </Field>
+//           </div>
+//           <div style = {{marginLeft: 20}}>
+//             <Field
+//               name="city"
+//               component={renderSelectField}
+//               label="City"
+//               style = {{marginLeft: 12}}
+//             >
+//               <option value="" />
+//               <option value={'USA'}>USA</option>
+//               <option value={'UK'}>UK</option>
+//               <option value={'VN'}>VN</option>
+//             </Field>
+//           </div>
+//         </div>
+//         <div style = {{display: "flex"}}>
+//           <div>
+//             <Field
+//               name="district"
+//               component={renderSelectField}
+//               label="District"
+//             >
+//               <option value="" />
+//               <option value={'USA'}>USA</option>
+//               <option value={'UK'}>UK</option>
+//               <option value={'VN'}>VN</option>
+//             </Field>
+//           </div>
+//           <div style = {{marginLeft: 20}}>
+//             <Field
+//               name="street"
+//               type="text"
+//               component={renderTextField}
+//               label="Street #"
+//               style = {{width:100}}
+//             />
+//           </div>
+//           <div style = {{marginLeft: 14}}>
+//             <Field
+//               name="streetName"
+//               type="text"
+//               component={renderTextField}
+//               label="Street Name"
+//               style = {{width:368}}
+//             />
+//           </div>
+          
+//         </div>
+//         <div style = {{display: "flex", justifyContent: " space-between"}}>
+//           <div style = {{}}>
+//               <Field
+//                 name="zipCode"
+//                 type="text"
+//                 component={renderTextField}
+//                 label="ZIP Code"
+//                 style = {{width:150}}
+//               />
+//               <Field
+//                 name="ext"
+//                 type="text"
+//                 component={renderTextField}
+//                 label="+4 Ext"
+//                 style = {{width:100, marginLeft: 6}}
+//               />
+//           </div>
+//           <div style = {{marginTop: 16, marginRight: 0}}>
+//               <Button style = {{backgroundColor: '#E1E4E9'}}>
+//                 Check
+//               </Button>
+//               <Button style = {{backgroundColor: '#E1E4E9', marginLeft: 6, width: 150}} >
+//                 FIND GEO CODES
+//               </Button>
+//           </div>
+           
+//         </div>
+//         <div  className = "borderFooter"></div>
+       
+           
+        
       
-      <div>
-        <button type="submit" disabled={submitting}>
-          Submit
-        </button>
-        <button type="button" disabled={pristine || submitting} onClick={reset}>
-          Clear Values
-        </button>
+//       <div>
+//       <div style = {{display:"flex", justifyContent: "flex-end"}}>
+//         <FieldArray name="members" component={renderMembers} />
+//       </div>
       
-      </div>
-    </form>
-  );
-};
+//         {/* <button type="submit" disabled={submitting}>
+//           Submit
+//         </button>
+//         <button type="button" disabled={pristine || submitting} onClick={reset}>
+//           Clear Values
+//         </button> */}
+      
+//       </div>
+//     </form>
+//   );
+// };
 export default reduxForm({
     form: 'demoForm',
   })(DemoForm);

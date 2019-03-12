@@ -8,3 +8,13 @@
     position: absolute;
     width: 100%;
 }
+.addArray {
+    border-bottom: 1px solid black !important ;
+}
+.MuiButton-label-123{
+    color: rgba(0, 0, 0, 0.87) !important;
+    justify-content: flex-start !important;
+}
+.addButton {
+    color: #51C68B
+}
