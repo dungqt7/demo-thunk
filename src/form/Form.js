@@ -10,6 +10,9 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
+import * as FIELDSNAMES from './constant';
+import SimpleDynamicTextField from './SimpleDynamicTextField';
+import ButtonShowMenus from './ButtonShowMenus';
 const styleul = {
   listStyle: 'none'
 }
@@ -69,71 +72,115 @@ const renderTextField = ({
 )
 
 
-  const renderHobbies = ({ fields, meta: { error } }) => (
-    <ul style = {styleul}>
-      <li>
-        <button type="button" onClick={() => fields.push()}>
-          Add Hobby
-        </button>
-      </li>
-      {fields.map((hobby, index) => (
-        <li key={index}>
-          <button
-            type="button"
-            title="Remove Hobby"
-            onClick={() => fields.remove(index)}
+  
+  const renderSetupCardAdditionalFields = ({ fields, meta: { error, submitFailed } }) => {
+    const items = [
+      {
+        type: FIELDSNAMES.SHIP_FROM_FIELD_NAME,
+        display: 'Ship from'
+      },
+      {
+        type: FIELDSNAMES.LOCATION_OF_ORDER_RECORDING_FIELD_NAME,
+        display: 'Location of order recording field name'
+      },
+      {
+        type: FIELDSNAMES.LOCATION_OF_ORDER_APPROVAL_FIELD_NAME,
+        display: 'Location of order approval'
+      },
+      {
+        type: FIELDSNAMES.BILL_TO_FIELD_NAME,
+        display: 'Bill to'
+      },
+      {
+        type: FIELDSNAMES.LOCATION_OF_USE_FIELD_NAME,
+        display: 'Location of use'
+      }
+    ];
+    return (
+      <div>
+        <div>
+          { submitFailed && error && <span>{ error }</span> }
+        </div>
+        <div style = {{  padding: '20px',marginTop:'20px', borderTop: fields.length && '1px solid #e6e6e6',  borderBottom: '1px solid #e6e6e6',}} >
+          {
+            fields.map((fieldPath, index) => {
+              switch (fields.get(index).type) {
+                case FIELDSNAMES.SHIP_FROM_FIELD_NAME: {
+                  return (<SimpleDynamicTextField
+                    key={ index }
+                    labelInput="Ship from"
+                    title="Ship from"
+                    fieldName={ `${ fieldPath }.Shipfrom` }
+                    onRemoveField={ () => fields.remove(index) }
+                    type="text"
+                  />)
+                }
+                case FIELDSNAMES.LOCATION_OF_ORDER_RECORDING_FIELD_NAME: {
+                  return <SimpleDynamicTextField
+                    key={ index }
+                    labelInput="Location of order recording"
+                    title="Location of order recording"
+                    fieldName={ `${ fieldPath }.Locationoforderecording` }
+                    onRemoveField={ () => fields.remove(index) }
+                    type="text"
+                  />
+                }
+                case FIELDSNAMES.LOCATION_OF_ORDER_APPROVAL_FIELD_NAME: {
+                  return <SimpleDynamicTextField
+                    key={ index }
+                    labelInput="Location of order approval"
+                    title="Location of order approval"
+                    fieldName={ `${ fieldPath }.Locationoforderapproval` }
+                    onRemoveField={ () => fields.remove(index) }
+                  />
+                }
+                case FIELDSNAMES.BILL_TO_FIELD_NAME: {
+                  return <SimpleDynamicTextField
+                    key={ index }
+                    labelInput="Bill to"
+                    title="Bill to"
+                    fieldName={ `${ fieldPath }.Billto` }
+                    onRemoveField={ () => fields.remove(index) }
+                  />;
+                }
+                case FIELDSNAMES.LOCATION_OF_USE_FIELD_NAME : {
+                  return <SimpleDynamicTextField
+                  key={ index }
+                  labelInput="Location of use"
+                  title="Location of use"
+                  fieldName={ `${ fieldPath }.Locationofuse` }
+                  onRemoveField={ () => fields.remove(index) }
+                />;
+  
+                }
+                default: {
+                  return <h1>''</h1>
+                }
+              }
+              
+            })
+              
+          }
+          
+        </div>
+        <div style={ { padding: '20px' } }>
+        {console.log('fields = ', fields)}
+          <ButtonShowMenus
+            label="Add Calculation Set-up Items"
+            items={ items }
+            onItemSelected={ (item) => {
+              fields.push({ type: item.type })
+            } }
+           
+            itemsSelected={fields.getAll()?fields.getAll(): []}
           />
-          <Field
-            name={hobby}
-            type="text"
-            component={renderField}
-            label={`Hobby #${index + 1}`}
-          />
-        </li>
-      ))}
-      {error && <li className="error">{error}</li>}
-    </ul>
-  )
-  const renderMembers = ({ fields, meta: { error, submitFailed } }) => (
-    <ul style = {styleul}>
-      <li style = {styleul}>
-       <div style = {{display: "flex"}}>
-        <AddIcon style = {{marginTop:93}} className = "addButton"/>
-          <Button  color="primary" className = "addArray" onClick={() => fields.push({})} style = {{marginTop: 82, borderRadius:0, width:232, marginBottom: 9}}>
-            Add Member
-            <svg className="MuiSvgIcon-root-158 MuiSelect-icon-157" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation"><path d="M7 10l5 5 5-5z"></path></svg>
-        </Button> 
-       </div>
-        
-        {submitFailed && error && <span>{error}</span>}
-      </li>
-      {fields.map((member, index) => (
-        <li key={index} style = {styleul}>
-           <Button  color="secondary" onClick={() => fields.remove(index)}>
-              <DeleteIcon />
-           </Button> 
-          <h4>Member #{index + 1}</h4>
-          <Field
-            name= "firstName"
-            type="text"
-            component={renderTextField}
-            label="First Name"
-          />
-          <Field
-            name = "lastName"
-            type="text"
-            component={renderTextField}
-            label="Last Name"
-          />
-          <FieldArray name={`${member}.hobbies`} component={renderHobbies} />
-        </li>
-      ))}
-    </ul>
-  )
+      </div>
+  
+      </div>
+    )
+  }
+ 
   class DemoForm extends Component  {
-    handleChange = (e) => {
-      this.setState({ value: e.target.value });
-    }
      render() {
        return(
         <form onSubmit = {this.props.handleSubmit(val => console.log(val))}  style={{float: "left"}} >
@@ -260,8 +307,8 @@ const renderTextField = ({
                />
            </div>
            <div style = {{marginTop: 16, marginRight: 0}}>
-               <Button style = {{backgroundColor: '#E1E4E9'}}>
-                 Check
+               <Button style = {{backgroundColor: '#E1E4E9'}} onClick={this.props.reset}>
+                 Reset
                </Button>
                <Button style = {{backgroundColor: '#E1E4E9', marginLeft: 6, width: 150}} >
                  FIND GEO CODES
@@ -269,25 +316,25 @@ const renderTextField = ({
            </div>
             
          </div>
-         <div  className = "borderFooter"></div>
-        
-            
          
-       
        <div>
-       <div style = {{display:"flex", justifyContent: "flex-end"}}>
-         <FieldArray name="members" component={renderMembers} />
-       </div>
+      
        
-         <button type="submit" disabled={this.props.submitting}>
+         {/* <button type="submit" disabled={this.props.submitting}>
            Submit
          </button>
          <button type="button" disabled={this.props.pristine || this.props.submitting} onClick={this.props.reset}>
            Clear Values
-         </button>
-       
+         </button> */}
+            <div>
+              <FieldArray  name={ FIELDSNAMES.ADDITIONAL_LOCATION_FIELDS_NAME }
+                  component={ renderSetupCardAdditionalFields }/>
+            </div>
        </div>
+       
+      
      </form>
+        
        );
      }
   }
