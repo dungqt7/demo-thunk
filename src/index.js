@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from "react-redux";
 import  configureStore from './store/configstore';
 const store =  configureStore();
-store.subscribe(()=>console.log('store = ', store.getState()))
+
 ReactDOM.render(
     <Provider store={store}>
       <App />
