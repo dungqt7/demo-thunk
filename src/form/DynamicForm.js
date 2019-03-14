@@ -8,7 +8,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import {  reduxForm } from 'redux-form'
+import MenuItem from '@material-ui/core/MenuItem';
 const renderSelectField = ({
     input,
     label,
@@ -87,10 +87,9 @@ const DynamicForm = props => {
                                 component={renderSelectField}
                                 label="Country"
                             >
-                                <option value="" />
-                                <option value={'USA'}>USA</option>
-                                <option value={'UK'}>UK</option>
-                                <option value={'VN'}>VN</option>
+                                <MenuItem value={ "USA" }>USA</MenuItem>
+                                <MenuItem value={ "UK" }>UK</MenuItem>
+                                <MenuItem value={ "VN" }>VN</MenuItem>
                             </Field>
                         </div>
                         <div style = {{marginLeft: 20}}>
@@ -100,11 +99,10 @@ const DynamicForm = props => {
                                 label="State"
                                 style = {{marginLeft: 12}}
                             >
-                                <option value="" />
-                                <option value={'Alabama'}> Alabama</option>
-                                <option value={'Alaska'}>Alaska</option>
-                                <option value={'Connecticut'}> Connecticut</option>
-                                <option value={'Louisiana'}>  Louisiana</option>
+                                <MenuItem value={ "Alabama" }>Alabama</MenuItem>
+                                <MenuItem value={ "Alaska" }>Alaska</MenuItem>
+                                <MenuItem value={ "Connecticut" }>Connecticut</MenuItem>
+                                <MenuItem value={ "Louisiana" }>Louisiana</MenuItem>
                             </Field>
                         </div>  
                     </div> 
@@ -115,10 +113,9 @@ const DynamicForm = props => {
                                 component={renderSelectField}
                                 label="County"
                             >
-                                <option value="" />
-                                <option value={'USA'}>USA</option>
-                                <option value={'UK'}>UK</option>
-                                <option value={'VN'}>VN</option>
+                                <MenuItem value={ "USA" }>USA</MenuItem>
+                                <MenuItem value={ "UK" }>UK</MenuItem>
+                                <MenuItem value={ "VN" }>VN</MenuItem>
                             </Field>
                         </div>
                         <div style = {{marginLeft: 20}}>
@@ -128,11 +125,10 @@ const DynamicForm = props => {
                                 label="City"
                                 style = {{marginLeft: 12}}
                             >
-                                <option value="" />
-                                <option value={'Alabama'}> Alabama</option>
-                                <option value={'Alaska'}>Alaska</option>
-                                <option value={'Connecticut'}> Connecticut</option>
-                                <option value={'Louisiana'}>  Louisiana</option>
+                                <MenuItem value={ "Alabama" }>Alabama</MenuItem>
+                                <MenuItem value={ "Alaska" }>Alaska</MenuItem>
+                                <MenuItem value={ "Connecticut" }>Connecticut</MenuItem>
+                                <MenuItem value={ "Louisiana" }>Louisiana</MenuItem>
                             </Field>
                         </div>  
                     </div> 
@@ -143,10 +139,9 @@ const DynamicForm = props => {
                             component={renderSelectField}
                             label="District"
                             >
-                            <option value="" />
-                            <option value={'USA'}>USA</option>
-                            <option value={'UK'}>UK</option>
-                            <option value={'VN'}>VN</option>
+                                <MenuItem value={ "USA" }>USA</MenuItem>
+                                <MenuItem value={ "UK" }>UK</MenuItem>
+                                <MenuItem value={ "VN" }>VN</MenuItem>
                         </Field>
                         </div>
                             <div style = {{marginLeft: 20}}>
@@ -198,6 +193,4 @@ const DynamicForm = props => {
         </div>
     )
   }
-export default reduxForm({
-    form: 'dynamicForm', // a unique identifier for this form
-  })(DynamicForm)
+export default DynamicForm;

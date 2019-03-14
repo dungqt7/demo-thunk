@@ -7,6 +7,7 @@ import AddIcon from '@material-ui/icons/Add';
 import {  MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
@@ -184,10 +185,10 @@ const renderTextField = ({
                label="Country"
                onChange={this.handleChange}
              >
-               <option value="" />
-               <option value={'USA'}>USA</option>
-               <option value={'UK'}>UK</option>
-               <option value={'VN'}>VN</option>
+                
+                <MenuItem value={ "USA" }>USA</MenuItem>
+               <MenuItem value={ "USA" }>UK</MenuItem>
+               <MenuItem value={ "USA" }>VN</MenuItem>
              </Field>
            </div>
            <div style = {{marginLeft: 20}}>
@@ -197,11 +198,10 @@ const renderTextField = ({
                label="State"
                style = {{marginLeft: 12}}
              >
-               <option value="" />
-               <option value={'Alabama'}> Alabama</option>
-               <option value={'Alaska'}>Alaska</option>
-               <option value={'Connecticut'}> Connecticut</option>
-               <option value={'Louisiana'}>  Louisiana</option>
+                <MenuItem value={ "Alabama" }>Alabama</MenuItem>
+                <MenuItem value={ "Alaska" }>Alaska</MenuItem>
+                <MenuItem value={ "Connecticut" }>Connecticut</MenuItem>
+                <MenuItem value={ "Louisiana" }>Louisiana</MenuItem>
              </Field>
            </div>
           
@@ -213,10 +213,9 @@ const renderTextField = ({
                component={renderSelectField}
                label="County"
              >
-               <option value="" />
-               <option value={'USA'}>USA</option>
-               <option value={'UK'}>UK</option>
-               <option value={'VN'}>VN</option>
+               <MenuItem value={ "USA" }>USA</MenuItem>
+               <MenuItem value={ "USA" }>UK</MenuItem>
+               <MenuItem value={ "USA" }>VN</MenuItem>
              </Field>
            </div>
            <div style = {{marginLeft: 20}}>
@@ -226,10 +225,9 @@ const renderTextField = ({
                label="City"
                style = {{marginLeft: 12}}
              >
-               <option value="" />
-               <option value={'USA'}>USA</option>
-               <option value={'UK'}>UK</option>
-               <option value={'VN'}>VN</option>
+               <MenuItem value={ "USA" }>USA</MenuItem>
+               <MenuItem value={ "USA" }>UK</MenuItem>
+               <MenuItem value={ "USA" }>VN</MenuItem>
              </Field>
            </div>
          </div>
@@ -240,10 +238,9 @@ const renderTextField = ({
                component={renderSelectField}
                label="District"
              >
-               <option value="" />
-               <option value={'USA'}>USA</option>
-               <option value={'UK'}>UK</option>
-               <option value={'VN'}>VN</option>
+               <MenuItem value={ "USA" }>USA</MenuItem>
+               <MenuItem value={ "USA" }>UK</MenuItem>
+               <MenuItem value={ "USA" }>VN</MenuItem>
              </Field>
            </div>
            <div style = {{marginLeft: 20}}>

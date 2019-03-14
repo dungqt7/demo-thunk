@@ -7,12 +7,12 @@ export default function SimpleDynamicTextField({ title, fieldName, labelInput, o
     return (
         <div style = {{display:"flex", width: 248, 
        }} >
-        <Field
-          name={ fieldName }
-          component={ renderTextField }
-          { ...customs }
-          label={ labelInput }
-        />
+            <Field
+              name={ fieldName }
+              component={ renderTextField }
+              { ...customs }
+              label={ labelInput }
+            />
         <div>
           <IconButton
             size="medium"
