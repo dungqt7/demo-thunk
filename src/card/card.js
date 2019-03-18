@@ -25,9 +25,8 @@ const styles = {
   }, 
 };
 
-function SimpleCard(props) {
+const  SimpleCard = props => {
   const { classes } = props;
-
   return (
     <Card className={classes.card}>
       <CardContent style = {{position: 'relative'}}>
@@ -39,10 +38,14 @@ function SimpleCard(props) {
             </Typography>
             <Typography  variant="h5"  style = {{textAlign: 'left', fontSize: 14, fontWeight: 'bold', marginTop: 33}}>
                 Ship-to
+               
             </Typography>
-            <DemoForm />
+            <DemoForm  />
+            
       </CardContent>
+    
     </Card>
+      
   );
 }
 

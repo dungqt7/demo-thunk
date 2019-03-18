@@ -16,7 +16,9 @@ import SimpleDynamicTextField from './SimpleDynamicTextField';
 import ButtonShowMenus from './ButtonShowMenus';
 import IconButton from '@material-ui/core/IconButton';
 import ActionDelete from '@material-ui/icons/Clear';
+import change from 'redux-thunk';
 import DynamicForm from './DynamicForm';
+import SimpleTable from '../table/table';
 const styleul = {
   listStyle: 'none'
 }
@@ -106,7 +108,7 @@ const renderTextField = ({
     ];
     return (
       <div>
-     
+        
         <div style = {{  padding: '20px',marginTop:'20px', borderTop: fields.length && '1px solid #e6e6e6',  borderBottom: '1px solid #e6e6e6',}} >
           {
             fields.map((fieldPath, index) => {
@@ -151,7 +153,7 @@ const renderTextField = ({
             itemsSelected={fields.getAll()?fields.getAll(): []}
           />
         </div>
-
+        <SimpleTable/>
       </div>
     )
    }
@@ -159,21 +161,32 @@ const renderTextField = ({
   
  
   class DemoForm extends Component  {
+    constructor(props) {
+      super(props);
+      this.state = {
+        location: '',
+      }
+    }
+    resetGeoCode =  () => {
+      this.props.change("geoCode", null);
+    }
+    
+   
      render() {
+      const {handleSubmit} = this.props;
        return(
-        <form onSubmit = {this.props.handleSubmit(val => console.log(val))}  style={{float: "left"}} >
+        <form onSubmit = {handleSubmit(() => { })}  style={{float: "left"}}  >
         <div style = {{display:'flex'}}>
            <Field
-               name="clubName"
+               name="geoCode"
                type="text"
                component={renderTextField}
                label="Geo Ceo"
-               validate={[required,number,mount]}
              />
              <Button style = {{backgroundColor: '#E1E4E9', marginLeft:12}}   >
                Check
              </Button>
-             <Button style = {{backgroundColor: '#E1E4E9', marginLeft:12}} onClick={this.props.reset} >
+             <Button style = {{backgroundColor: '#E1E4E9', marginLeft:12}} onClick={this.resetGeoCode} >
                Reset
              </Button>
         </div>
@@ -187,8 +200,8 @@ const renderTextField = ({
              >
                 
                 <MenuItem value={ "USA" }>USA</MenuItem>
-               <MenuItem value={ "USA" }>UK</MenuItem>
-               <MenuItem value={ "USA" }>VN</MenuItem>
+               <MenuItem value={ "UK" }>UK</MenuItem>
+               <MenuItem value={ "VN" }>VN</MenuItem>
              </Field>
            </div>
            <div style = {{marginLeft: 20}}>
@@ -284,7 +297,7 @@ const renderTextField = ({
                <Button style = {{backgroundColor: '#E1E4E9'}} onClick={this.props.reset}>
                  Reset
                </Button>
-               <Button style = {{backgroundColor: '#E1E4E9', marginLeft: 6, width: 150}} >
+               <Button style = {{backgroundColor: '#E1E4E9', marginLeft: 6, width: 150}} type = "submit" >
                  FIND GEO CODES
                </Button>
            </div>
@@ -315,4 +328,5 @@ const renderTextField = ({
 
 export default reduxForm({
     form: 'demoForm',
+     onSubmit: () => { /* do something here */ },
   })(DemoForm);
